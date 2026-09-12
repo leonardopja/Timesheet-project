@@ -1,7 +1,7 @@
 :host {
     display: block;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f4f7fb 0%, #edf3ff 100%);
+    background: linear-gradient(135deg, #dfeeff 0%, #edf6ff 28%, #f6fbff 52%, #ffffff 100%);
     color: #1f2937;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -13,6 +13,110 @@
 button,
 input {
     font: inherit;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+}
+
+.auth-card {
+    width: min(100%, 460px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 22px;
+    box-shadow: 0 30px 70px rgba(15, 23, 42, 0.08);
+    padding: 30px 28px 26px;
+}
+
+.auth-header {
+    margin-bottom: 18px;
+}
+
+.auth-header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.6rem);
+    color: #111827;
+}
+
+.auth-switcher {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #edf3ff;
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 22px;
+    gap: 6px;
+}
+
+.auth-switcher button {
+    border: none;
+    background: transparent;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+}
+
+.auth-switcher button.active {
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.auth-form label,
+.shift-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.auth-form input,
+.shift-form input {
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    height: 46px;
+    padding: 0 14px;
+    background: #f9fafb;
+    color: #111827;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-form input:focus,
+.shift-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background: white;
+}
+
+.default-user-box {
+    background: #eaf6ff;
+    border: 1px solid #cfe7ff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #1e3a8a;
+}
+
+.default-user-box strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.default-user-box p {
+    margin: 4px 0;
 }
 
 .page-shell {
@@ -44,6 +148,30 @@ h1 {
     color: #111827;
 }
 
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.welcome-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 999px;
+    padding: 10px 14px;
+    color: #1f2937;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+}
+
+.welcome-box strong {
+    color: #1d4ed8;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
 .topbar-badge {
     display: flex;
     align-items: center;
@@ -53,6 +181,10 @@ h1 {
     padding: 10px 16px;
     border-radius: 999px;
     box-shadow: 0 12px 25px rgba(17, 24, 39, 0.12);
+}
+
+.small-badge {
+    padding: 8px 12px;
 }
 
 .topbar-badge span {
@@ -88,35 +220,17 @@ h1 {
     color: #111827;
 }
 
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 .shift-form {
     display: flex;
     flex-direction: column;
     gap: 18px;
-}
-
-.shift-form label {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-weight: 600;
-    color: #374151;
-}
-
-.shift-form input {
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    height: 46px;
-    padding: 0 14px;
-    background: #f9fafb;
-    color: #111827;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.shift-form input:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-    background: white;
 }
 
 .time-grid {
@@ -148,6 +262,10 @@ button:hover {
     padding: 12px 18px;
     font-weight: 700;
     flex: 1;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .secondary-btn {
@@ -222,7 +340,9 @@ tbody tr:hover {
         grid-template-columns: 1fr;
     }
 
-    .topbar {
+    .topbar,
+    .topbar-actions,
+    .table-header {
         flex-direction: column;
         align-items: flex-start;
     }
