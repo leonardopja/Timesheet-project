@@ -78,10 +78,10 @@
       </div>
 
       <form (ngSubmit)="saveShift()" class="shift-form">
-        <label>
+        <div class="automatic-user">
           <span>Employee</span>
-          <input [(ngModel)]="form.employeeName" name="employeeName" type="text" placeholder="Employee name or role" />
-        </label>
+          <strong>{{ welcomeName() }}</strong>
+        </div>
 
         <label>
           <span>Date</span>
@@ -114,13 +114,23 @@
     <section class="card table-card">
       <div class="section-header table-header">
         <h2>Shift list</h2>
+        @if (showTimesheet()) {
         <div class="topbar-badge small-badge">
           <span>Total shifts</span>
           <strong>{{ totalShifts() }}</strong>
         </div>
+        }
       </div>
 
-      @if (shifts().length === 0) {
+      <button type="button" class="secondary-btn timesheet-toggle" (click)="toggleTimesheet()">
+        {{ showTimesheet() ? 'Hide my timesheet' : 'Show my timesheet' }}
+      </button>
+
+      @if (!showTimesheet()) {
+      <div class="empty-state">
+        <p>Your timesheet is hidden.</p>
+      </div>
+      } @else if (shifts().length === 0) {
       <div class="empty-state">
         <p>No shifts created yet.</p>
       </div>

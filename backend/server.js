@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
 
 const shiftSchema = new mongoose.Schema(
     {
+        userId: { type: String, required: true },
         employeeName: { type: String, required: true },
         date: { type: String, required: true },
         startTime: { type: String, required: true },
@@ -44,6 +45,7 @@ const serializeUser = (user) => ({
 
 const serializeShift = (shift) => ({
     id: shift._id.toString(),
+    userId: shift.userId,
     employeeName: shift.employeeName,
     date: shift.date,
     startTime: shift.startTime,
@@ -145,8 +147,15 @@ app.post('/api/users/register', async (req, res) => {
 });
 
 app.get('/api/shifts', async (req, res) => {
+    const { userId, role } = req.query;
+
+    if (!userId || !role) {
+        return res.status(400).json({ message: 'User information is required.' });
+    }
+
     try {
-        const shifts = await Shift.find({}).sort({ createdAt: 1 });
+        const filter = role === 'admin' ? {} : { userId };
+        const shifts = await Shift.find(filter).sort({ createdAt: 1 });
         res.json(shifts.map(serializeShift));
     } catch (error) {
         res.status(500).json({ message: 'Unable to fetch shifts.', error: error.message });
@@ -154,14 +163,14 @@ app.get('/api/shifts', async (req, res) => {
 });
 
 app.post('/api/shifts', async (req, res) => {
-    const { employeeName, date, startTime, endTime } = req.body;
+    const { userId, employeeName, date, startTime, endTime } = req.body;
 
-    if (!employeeName || !date || !startTime || !endTime) {
+    if (!userId || !employeeName || !date || !startTime || !endTime) {
         return res.status(400).json({ message: 'Complete all shift fields before saving.' });
     }
 
     try {
-        const shift = await Shift.create({ employeeName, date, startTime, endTime });
+        const shift = await Shift.create({ userId, employeeName, date, startTime, endTime });
         return res.status(201).json({ shift: serializeShift(shift) });
     } catch (error) {
         return res.status(500).json({ message: 'Unable to create shift.', error: error.message });
@@ -170,12 +179,12 @@ app.post('/api/shifts', async (req, res) => {
 
 app.put('/api/shifts/:id', async (req, res) => {
     const { id } = req.params;
-    const { employeeName, date, startTime, endTime } = req.body;
+    const { userId, employeeName, date, startTime, endTime } = req.body;
 
     try {
         const updatedShift = await Shift.findByIdAndUpdate(
             id,
-            { employeeName, date, startTime, endTime },
+            { userId, employeeName, date, startTime, endTime },
             { new: true },
         );
 

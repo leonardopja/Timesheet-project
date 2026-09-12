@@ -216,6 +216,27 @@ h1 {
     gap: 18px;
 }
 
+.automatic-user {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #eff6ff;
+    color: #1e3a8a;
+}
+
+.automatic-user span {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.timesheet-toggle {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
 .time-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

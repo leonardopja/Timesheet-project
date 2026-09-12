@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 interface Shift {
     id: string;
+    userId: string;
     employeeName: string;
     date: string;
     startTime: string;
@@ -33,6 +34,7 @@ export class App {
     authMode = signal<'login' | 'register'>('login');
 
     shifts = signal<Shift[]>([]);
+    showTimesheet = signal(false);
 
     editingId: string | null = null;
 
@@ -60,7 +62,6 @@ export class App {
 
     constructor() {
         this.loadUsers();
-        this.loadShifts();
     }
 
     private async loadUsers(): Promise<void> {
@@ -79,8 +80,15 @@ export class App {
     }
 
     private async loadShifts(): Promise<void> {
+        const user = this.activeUser();
+        if (!user) {
+            return;
+        }
+
         try {
-            const response = await fetch(`${API_URL}/shifts`);
+            const response = await fetch(
+                `${API_URL}/shifts?userId=${encodeURIComponent(user.id)}&role=${user.role}`,
+            );
             if (!response.ok) {
                 throw new Error('Unable to load shifts.');
             }
@@ -158,12 +166,16 @@ export class App {
 
     logout(): void {
         this.activeUser.set(null);
+        this.showTimesheet.set(false);
+        this.shifts.set([]);
     }
 
     async saveShift(): Promise<void> {
-        const { employeeName, date, startTime, endTime } = this.form;
+        const user = this.activeUser();
+        const employeeName = user?.name ?? '';
+        const { date, startTime, endTime } = this.form;
 
-        if (!employeeName || !date || !startTime || !endTime) {
+        if (!user || !date || !startTime || !endTime) {
             alert('Please complete all shift fields before saving.');
             return;
         }
@@ -175,7 +187,7 @@ export class App {
             const response = await fetch(endpoint, {
                 method,
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ employeeName, date, startTime, endTime }),
+                body: JSON.stringify({ userId: user.id, employeeName, date, startTime, endTime }),
             });
 
             const data = await response.json();
@@ -185,7 +197,9 @@ export class App {
                 return;
             }
 
-            await this.loadShifts();
+            if (this.showTimesheet()) {
+                await this.loadShifts();
+            }
             this.resetForm();
         } catch (error) {
             console.error('Shift save failed:', error);
@@ -201,6 +215,17 @@ export class App {
             startTime: shift.startTime,
             endTime: shift.endTime,
         };
+    }
+
+    async toggleTimesheet(): Promise<void> {
+        const shouldShow = !this.showTimesheet();
+        this.showTimesheet.set(shouldShow);
+
+        if (shouldShow) {
+            await this.loadShifts();
+        } else {
+            this.shifts.set([]);
+        }
     }
 
     async deleteShift(id: string): Promise<void> {
