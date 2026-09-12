@@ -53,16 +53,22 @@ const serializeShift = (shift) => ({
 });
 
 async function ensureDefaultAdmin() {
-    const adminUser = await User.findOne({ username: 'user' });
+    const adminUser = await User.findOne({ username: 'admin' });
 
     if (!adminUser) {
         await User.create({
             name: 'Admin',
-            username: 'user',
-            password: 'password',
+            username: 'admin',
+            password: 'admin',
             role: 'admin',
         });
+        return;
     }
+
+    adminUser.name = 'Admin';
+    adminUser.password = 'admin';
+    adminUser.role = 'admin';
+    await adminUser.save();
 }
 
 async function connectMongo() {
@@ -101,11 +107,11 @@ app.post('/api/users/login', async (req, res) => {
     try {
         let user = await User.findOne({ username });
 
-        if (!user && username === 'user' && password === 'password') {
+        if (!user && username === 'admin' && password === 'admin') {
             user = await User.create({
                 name: 'Admin',
-                username: 'user',
-                password: 'password',
+                username: 'admin',
+                password: 'admin',
                 role: 'admin',
             });
         }
@@ -128,6 +134,10 @@ app.post('/api/users/register', async (req, res) => {
     }
 
     try {
+        if (username === 'admin') {
+            return res.status(409).json({ message: 'The admin account is reserved for the boss.' });
+        }
+
         const exists = await User.findOne({ username });
         if (exists) {
             return res.status(409).json({ message: 'This username is already in use.' });
