@@ -157,7 +157,7 @@ app.post('/api/users/register', async (req, res) => {
 });
 
 app.get('/api/shifts', async (req, res) => {
-    const { userId, role, date, employeeName, startTime, sort } = req.query;
+    const { userId, role, date, employeeName, sort } = req.query;
 
     if (!userId || !role) {
         return res.status(400).json({ message: 'User information is required.' });
@@ -174,11 +174,9 @@ app.get('/api/shifts', async (req, res) => {
             filter.employeeName = { $regex: employeeName, $options: 'i' };
         }
 
-        if (startTime) {
-            filter.startTime = startTime;
-        }
-
-        const ordering = sort === 'employee' ? { employeeName: 1, date: 1, startTime: 1 } : { createdAt: 1 };
+        const ordering = sort === 'month'
+            ? { date: 1, employeeName: 1, startTime: 1 }
+            : { employeeName: 1, date: 1, startTime: 1 };
         const shifts = await Shift.find(filter).sort(ordering);
         res.json(shifts.map(serializeShift));
     } catch (error) {

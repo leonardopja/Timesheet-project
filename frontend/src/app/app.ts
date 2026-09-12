@@ -45,7 +45,6 @@ export class App {
     adminFilters = {
         date: '',
         employeeName: '',
-        startTime: '',
         sort: 'employee',
     };
 
@@ -173,9 +172,6 @@ export class App {
                 }
                 if (this.adminFilters.employeeName) {
                     query.set('employeeName', this.adminFilters.employeeName);
-                }
-                if (this.adminFilters.startTime) {
-                    query.set('startTime', this.adminFilters.startTime);
                 }
                 query.set('sort', this.adminFilters.sort);
             }
@@ -351,7 +347,6 @@ export class App {
         this.adminFilters = {
             date: '',
             employeeName: '',
-            startTime: '',
             sort: 'employee',
         };
 

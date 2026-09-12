@@ -168,15 +168,10 @@
           </label>
 
           <label>
-            <span>Start time</span>
-            <input [(ngModel)]="adminFilters.startTime" name="filterStartTime" type="time" />
-          </label>
-
-          <label>
             <span>Order</span>
             <select [(ngModel)]="adminFilters.sort" name="filterSort">
               <option value="employee">Alphabetical by employee</option>
-              <option value="created">Newest created</option>
+              <option value="month">By month</option>
             </select>
           </label>
         </div>
