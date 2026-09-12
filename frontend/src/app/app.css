@@ -15,8 +15,8 @@
     z-index: -1;
     content: '';
     background: url('/exer-tech.png') center top / min(720px, 78vw) auto no-repeat;
-    filter: blur(10px);
-    opacity: 0.25;
+    filter: blur(7px);
+    opacity: 0.38;
     transform: scale(1.04);
 }
 
