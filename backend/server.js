@@ -157,7 +157,7 @@ app.post('/api/users/register', async (req, res) => {
 });
 
 app.get('/api/shifts', async (req, res) => {
-    const { userId, role, date, employeeName, sort } = req.query;
+    const { userId, role, date, employeeName, month, sort } = req.query;
 
     if (!userId || !role) {
         return res.status(400).json({ message: 'User information is required.' });
@@ -168,6 +168,10 @@ app.get('/api/shifts', async (req, res) => {
 
         if (date) {
             filter.date = date;
+        }
+
+        if (month) {
+            filter.date = { $regex: `^${month}` };
         }
 
         if (employeeName) {

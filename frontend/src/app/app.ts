@@ -45,8 +45,17 @@ export class App {
     adminFilters = {
         date: '',
         employeeName: '',
+        month: '',
         sort: 'employee',
     };
+
+    monthOptions = Array.from({ length: 12 }, (_, index) => {
+        const month = String(index + 1).padStart(2, '0');
+        const label = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
+            new Date(2026, index, 1),
+        );
+        return { value: `2026-${month}`, label };
+    });
 
     editingId: string | null = null;
 
@@ -172,6 +181,9 @@ export class App {
                 }
                 if (this.adminFilters.employeeName) {
                     query.set('employeeName', this.adminFilters.employeeName);
+                }
+                if (this.adminFilters.month && this.adminFilters.sort === 'month') {
+                    query.set('month', this.adminFilters.month);
                 }
                 query.set('sort', this.adminFilters.sort);
             }
@@ -347,6 +359,7 @@ export class App {
         this.adminFilters = {
             date: '',
             employeeName: '',
+            month: '',
             sort: 'employee',
         };
 
