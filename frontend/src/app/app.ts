@@ -36,6 +36,13 @@ export class App {
     shifts = signal<Shift[]>([]);
     showTimesheet = signal(false);
 
+    adminFilters = {
+        date: '',
+        employeeName: '',
+        startTime: '',
+        sort: 'employee',
+    };
+
     editingId: string | null = null;
 
     loginForm = {
@@ -86,8 +93,26 @@ export class App {
         }
 
         try {
+            const query = new URLSearchParams({
+                userId: user.id,
+                role: user.role,
+            });
+
+            if (user.role === 'admin') {
+                if (this.adminFilters.date) {
+                    query.set('date', this.adminFilters.date);
+                }
+                if (this.adminFilters.employeeName) {
+                    query.set('employeeName', this.adminFilters.employeeName);
+                }
+                if (this.adminFilters.startTime) {
+                    query.set('startTime', this.adminFilters.startTime);
+                }
+                query.set('sort', this.adminFilters.sort);
+            }
+
             const response = await fetch(
-                `${API_URL}/shifts?userId=${encodeURIComponent(user.id)}&role=${user.role}`,
+                `${API_URL}/shifts?${query.toString()}`,
             );
             if (!response.ok) {
                 throw new Error('Unable to load shifts.');
@@ -225,6 +250,25 @@ export class App {
             await this.loadShifts();
         } else {
             this.shifts.set([]);
+        }
+    }
+
+    async applyAdminFilters(): Promise<void> {
+        if (this.showTimesheet()) {
+            await this.loadShifts();
+        }
+    }
+
+    async clearAdminFilters(): Promise<void> {
+        this.adminFilters = {
+            date: '',
+            employeeName: '',
+            startTime: '',
+            sort: 'employee',
+        };
+
+        if (this.showTimesheet()) {
+            await this.loadShifts();
         }
     }
 

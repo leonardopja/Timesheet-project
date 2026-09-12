@@ -123,8 +123,52 @@
       </div>
 
       <button type="button" class="secondary-btn timesheet-toggle" (click)="toggleTimesheet()">
-        {{ showTimesheet() ? 'Hide my timesheet' : 'Show my timesheet' }}
+        {{ showTimesheet() ? (isBoss() ? 'Hide all timesheets' : 'Hide my timesheet') : (isBoss() ? 'Show all
+        timesheets' : 'Show my timesheet') }}
       </button>
+
+      @if (showTimesheet() && isBoss()) {
+      <div class="admin-filters">
+        <div class="filter-heading">
+          <div>
+            <p class="eyebrow">Boss tools</p>
+            <h3>Filter worked days</h3>
+          </div>
+          <span class="filter-result">{{ totalShifts() }} result(s)</span>
+        </div>
+
+        <div class="filter-grid">
+          <label>
+            <span>Date</span>
+            <input [(ngModel)]="adminFilters.date" name="filterDate" type="date" />
+          </label>
+
+          <label>
+            <span>Employee / shift</span>
+            <input [(ngModel)]="adminFilters.employeeName" name="filterEmployee" type="text"
+              placeholder="Search by name" />
+          </label>
+
+          <label>
+            <span>Start time</span>
+            <input [(ngModel)]="adminFilters.startTime" name="filterStartTime" type="time" />
+          </label>
+
+          <label>
+            <span>Order</span>
+            <select [(ngModel)]="adminFilters.sort" name="filterSort">
+              <option value="employee">Alphabetical by employee</option>
+              <option value="created">Newest created</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="filter-actions">
+          <button type="button" class="primary-btn" (click)="applyAdminFilters()">Apply filters</button>
+          <button type="button" class="secondary-btn" (click)="clearAdminFilters()">Clear filters</button>
+        </div>
+      </div>
+      }
 
       @if (!showTimesheet()) {
       <div class="empty-state">
