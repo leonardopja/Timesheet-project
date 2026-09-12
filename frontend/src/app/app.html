@@ -1,0 +1,104 @@
+﻿<div class="page-shell">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Professional dashboard</p>
+      <h1>Shift Builder</h1>
+    </div>
+    <div class="topbar-badge">
+      <span>Total shifts</span>
+      <strong>{{ totalShifts() }}</strong>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <section class="card form-card">
+      <div class="section-header">
+        <h2>{{ editingId !== null ? 'Edit shift' : 'Create shift' }}</h2>
+      </div>
+
+      <form (ngSubmit)="saveShift()" class="shift-form">
+        <label>
+          <span>Employee</span>
+          <input
+            [(ngModel)]="form.employeeName"
+            name="employeeName"
+            type="text"
+            placeholder="Employee name or role"
+          />
+        </label>
+
+        <label>
+          <span>Date</span>
+          <input [(ngModel)]="form.date" name="date" type="date" />
+        </label>
+
+        <div class="time-grid">
+          <label>
+            <span>Start time</span>
+            <input [(ngModel)]="form.startTime" name="startTime" type="time" />
+          </label>
+
+          <label>
+            <span>End time</span>
+            <input [(ngModel)]="form.endTime" name="endTime" type="time" />
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-btn">
+            {{ editingId !== null ? 'Update shift' : 'Add shift' }}
+          </button>
+          <button type="button" class="secondary-btn" (click)="resetForm()">
+            Clear
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card table-card">
+      <div class="section-header">
+        <h2>Shift list</h2>
+      </div>
+
+      @if (shifts().length === 0) {
+        <div class="empty-state">
+          <p>No shifts created yet.</p>
+        </div>
+      } @else {
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (shift of shifts(); track shift.id) {
+                <tr>
+                  <td>{{ shift.employeeName }}</td>
+                  <td>{{ shift.date }}</td>
+                  <td>{{ shift.startTime }}</td>
+                  <td>{{ shift.endTime }}</td>
+                  <td>
+                    <div class="row-actions">
+                      <button type="button" class="action-btn edit" (click)="editShift(shift)">
+                        Edit
+                      </button>
+                      <button type="button" class="action-btn delete" (click)="deleteShift(shift.id)">
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+  </main>
+</div>

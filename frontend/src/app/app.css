@@ -1,0 +1,229 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f4f7fb 0%, #edf3ff 100%);
+    color: #1f2937;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.page-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    color: #5b6b8a;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: #111827;
+}
+
+.topbar-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #111827;
+    color: #f9fafb;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-shadow: 0 12px 25px rgba(17, 24, 39, 0.12);
+}
+
+.topbar-badge span {
+    opacity: 0.8;
+    font-size: 0.82rem;
+}
+
+.topbar-badge strong {
+    font-size: 1.3rem;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 24px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+    padding: 22px;
+}
+
+.section-header {
+    margin-bottom: 22px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #111827;
+}
+
+.shift-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.shift-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.shift-form input {
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    height: 46px;
+    padding: 0 14px;
+    background: #f9fafb;
+    color: #111827;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shift-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background: white;
+}
+
+.time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    padding: 12px 18px;
+    font-weight: 700;
+    flex: 1;
+}
+
+.secondary-btn {
+    background: #e5e7eb;
+    color: #1f2937;
+    padding: 12px 18px;
+    font-weight: 700;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 620px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    color: #6b7280;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+.row-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.action-btn.edit {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.action-btn.delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 14px;
+    background: #f8fafc;
+    color: #64748b;
+}
+
+@media (max-width: 880px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
