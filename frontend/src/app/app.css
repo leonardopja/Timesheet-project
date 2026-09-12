@@ -102,23 +102,6 @@ input {
     background: white;
 }
 
-.default-user-box {
-    background: #eaf6ff;
-    border: 1px solid #cfe7ff;
-    border-radius: 12px;
-    padding: 12px 14px;
-    color: #1e3a8a;
-}
-
-.default-user-box strong {
-    display: block;
-    margin-bottom: 6px;
-}
-
-.default-user-box p {
-    margin: 4px 0;
-}
-
 .page-shell {
     max-width: 1200px;
     margin: 0 auto;
