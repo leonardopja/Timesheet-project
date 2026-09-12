@@ -29,8 +29,8 @@ export class App {
     {
       id: 1,
       name: 'Admin',
-      username: 'admin',
-      password: 'admin',
+      username: 'user',
+      password: 'password',
       role: 'admin',
     },
   ]);
