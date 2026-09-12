@@ -66,6 +66,23 @@ export class App {
     totalShifts = computed(() => this.shifts().length);
     isBoss = computed(() => this.activeUser()?.role === 'admin');
     welcomeName = computed(() => this.activeUser()?.name ?? 'User');
+    totalWorkedMinutes = computed(() =>
+        this.shifts().reduce((total, shift) => total + this.getShiftMinutes(shift), 0),
+    );
+    totalOvertimeMinutes = computed(() => {
+        const minutesByEmployeeAndDate = new Map<string, number>();
+
+        for (const shift of this.shifts()) {
+            const key = `${shift.userId}:${shift.date}`;
+            const minutes = minutesByEmployeeAndDate.get(key) ?? 0;
+            minutesByEmployeeAndDate.set(key, minutes + this.getShiftMinutes(shift));
+        }
+
+        return [...minutesByEmployeeAndDate.values()].reduce(
+            (total, minutes) => total + Math.max(0, minutes - 8 * 60),
+            0,
+        );
+    });
 
     constructor() {
         this.loadUsers();
@@ -124,6 +141,25 @@ export class App {
             console.error('Failed to load shifts:', error);
             this.shifts.set([]);
         }
+    }
+
+    private getShiftMinutes(shift: Shift): number {
+        const [startHour, startMinute] = shift.startTime.split(':').map(Number);
+        const [endHour, endMinute] = shift.endTime.split(':').map(Number);
+        const start = startHour * 60 + startMinute;
+        let end = endHour * 60 + endMinute;
+
+        if (end < start) {
+            end += 24 * 60;
+        }
+
+        return end - start;
+    }
+
+    formatMinutes(minutes: number): string {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = minutes % 60;
+        return `${hours}h ${remainingMinutes.toString().padStart(2, '0')}min`;
     }
 
     async login(): Promise<void> {

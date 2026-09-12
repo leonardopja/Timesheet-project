@@ -168,6 +168,18 @@
           <button type="button" class="secondary-btn" (click)="clearAdminFilters()">Clear filters</button>
         </div>
       </div>
+
+      <div class="hours-summary">
+        <div class="hours-stat">
+          <span>Worked hours</span>
+          <strong>{{ formatMinutes(totalWorkedMinutes()) }}</strong>
+        </div>
+        <div class="hours-stat overtime-stat">
+          <span>Overtime</span>
+          <strong>{{ formatMinutes(totalOvertimeMinutes()) }}</strong>
+        </div>
+        <p class="hours-note">Overtime is calculated after 8 hours worked by the same employee on the same day.</p>
+      </div>
       }
 
       @if (!showTimesheet()) {
