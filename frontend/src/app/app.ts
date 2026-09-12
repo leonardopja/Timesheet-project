@@ -18,6 +18,12 @@ interface User {
     role: 'admin' | 'employee';
 }
 
+interface EmployeeSummary {
+    employeeName: string;
+    workedMinutes: number;
+    overtimeMinutes: number;
+}
+
 const API_URL = 'http://localhost:3000/api';
 
 @Component({
@@ -81,6 +87,52 @@ export class App {
         return [...minutesByEmployeeAndDate.values()].reduce(
             (total, minutes) => total + Math.max(0, minutes - 8 * 60),
             0,
+        );
+    });
+    employeeUsers = computed(() =>
+        this.users()
+            .filter((user) => user.role === 'employee')
+            .sort((first, second) => first.name.localeCompare(second.name)),
+    );
+    employeeSummaries = computed<EmployeeSummary[]>(() => {
+        const byEmployeeAndDate = new Map<string, { userId: string; employeeName: string; minutes: number }>();
+
+        const summaries = new Map<string, EmployeeSummary>();
+        for (const employee of this.employeeUsers()) {
+            if (this.adminFilters.employeeName && employee.name !== this.adminFilters.employeeName) {
+                continue;
+            }
+
+            summaries.set(employee.id, {
+                employeeName: employee.name,
+                workedMinutes: 0,
+                overtimeMinutes: 0,
+            });
+        }
+
+        for (const shift of this.shifts()) {
+            const key = `${shift.userId}:${shift.date}`;
+            const current = byEmployeeAndDate.get(key) ?? {
+                userId: shift.userId,
+                employeeName: shift.employeeName,
+                minutes: 0,
+            };
+            current.minutes += this.getShiftMinutes(shift);
+            byEmployeeAndDate.set(key, current);
+        }
+
+        for (const dailyTotal of byEmployeeAndDate.values()) {
+            const summary = summaries.get(dailyTotal.userId);
+            if (!summary) {
+                continue;
+            }
+
+            summary.workedMinutes += dailyTotal.minutes;
+            summary.overtimeMinutes += Math.max(0, dailyTotal.minutes - 8 * 60);
+        }
+
+        return [...summaries.values()].sort((first, second) =>
+            first.employeeName.localeCompare(second.employeeName),
         );
     });
 

@@ -194,6 +194,15 @@ app.post('/api/shifts', async (req, res) => {
     }
 
     try {
+        const owner = await User.findById(userId);
+        if (!owner) {
+            return res.status(404).json({ message: 'Employee not found.' });
+        }
+
+        if (owner.role === 'admin') {
+            return res.status(403).json({ message: 'The boss account cannot create shifts.' });
+        }
+
         const shift = await Shift.create({ userId, employeeName, date, startTime, endTime });
         return res.status(201).json({ shift: serializeShift(shift) });
     } catch (error) {

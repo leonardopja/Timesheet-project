@@ -193,6 +193,28 @@ h1 {
     padding: 22px;
 }
 
+.admin-card {
+    min-height: 180px;
+}
+
+.admin-description {
+    margin: 10px 0 0;
+    color: #64748b;
+}
+
+.admin-highlights {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 28px;
+    color: #1e3a8a;
+}
+
+.admin-highlights strong {
+    font-size: 2.4rem;
+    color: #111827;
+}
+
 .section-header {
     margin-bottom: 22px;
 }
@@ -345,6 +367,36 @@ h1 {
     margin: 0;
     color: #64748b;
     font-size: 0.82rem;
+}
+
+.employee-summary-list {
+    margin-bottom: 22px;
+}
+
+.employee-summary-list h3 {
+    margin: 0 0 10px;
+    color: #111827;
+    font-size: 1rem;
+}
+
+.employee-summary-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.employee-summary-row strong {
+    color: #111827;
+}
+
+.summary-overtime {
+    color: #c2410c;
+    font-weight: 700;
 }
 
 .time-grid {

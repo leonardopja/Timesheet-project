@@ -72,6 +72,7 @@
   </header>
 
   <main class="dashboard">
+    @if (!isBoss()) {
     <section class="card form-card">
       <div class="section-header">
         <h2>{{ editingId !== null ? 'Edit shift' : 'Create shift' }}</h2>
@@ -110,6 +111,19 @@
         </div>
       </form>
     </section>
+    } @else {
+    <section class="card admin-card">
+      <div class="section-header">
+        <p class="eyebrow">Administrative workspace</p>
+        <h2>Team timesheets</h2>
+        <p class="admin-description">Review employee attendance, hours and overtime from one place.</p>
+      </div>
+      <div class="admin-highlights">
+        <strong>{{ employeeUsers().length }}</strong>
+        <span>registered employees</span>
+      </div>
+    </section>
+    }
 
     <section class="card table-card">
       <div class="section-header table-header">
@@ -145,8 +159,12 @@
 
           <label>
             <span>Employee / shift</span>
-            <input [(ngModel)]="adminFilters.employeeName" name="filterEmployee" type="text"
-              placeholder="Search by name" />
+            <select [(ngModel)]="adminFilters.employeeName" name="filterEmployee">
+              <option value="">All employees</option>
+              @for (employee of employeeUsers(); track employee.id) {
+              <option [value]="employee.name">{{ employee.name }}</option>
+              }
+            </select>
           </label>
 
           <label>
@@ -180,6 +198,19 @@
         </div>
         <p class="hours-note">Overtime is calculated after 8 hours worked by the same employee on the same day.</p>
       </div>
+
+      @if (employeeSummaries().length > 0) {
+      <div class="employee-summary-list">
+        <h3>Hours by employee</h3>
+        @for (summary of employeeSummaries(); track summary.employeeName) {
+        <div class="employee-summary-row">
+          <strong>{{ summary.employeeName }}</strong>
+          <span>Worked: {{ formatMinutes(summary.workedMinutes) }}</span>
+          <span class="summary-overtime">Overtime: {{ formatMinutes(summary.overtimeMinutes) }}</span>
+        </div>
+        }
+      </div>
+      }
       }
 
       @if (!showTimesheet()) {
