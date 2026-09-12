@@ -1,9 +1,23 @@
 :host {
     display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     min-height: 100vh;
     background: linear-gradient(135deg, #dfeeff 0%, #edf6ff 28%, #f6fbff 52%, #ffffff 100%);
     color: #1f2937;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:host::before {
+    position: absolute;
+    inset: -36px;
+    z-index: -1;
+    content: '';
+    background: url('/exer-tech.png') center / min(720px, 78vw) auto no-repeat;
+    filter: blur(12px);
+    opacity: 0.16;
+    transform: scale(1.04);
 }
 
 * {
