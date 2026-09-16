@@ -296,6 +296,16 @@ h3,
     flex-direction: column;
 }
 
+.sidebar-company-logo {
+    display: block;
+    width: 185px;
+    height: auto;
+    padding: 8px 12px;
+    margin: 0 auto 28px;
+    background: #fff;
+    border-radius: 6px;
+}
+
 .sidebar-brand {
     display: flex;
     align-items: center;
@@ -639,6 +649,12 @@ td small {
 
     .sidebar-brand {
         margin: 0 auto 0 0;
+    }
+
+    .sidebar-company-logo {
+        width: 128px;
+        padding: 5px 7px;
+        margin: 0;
     }
 
     .sidebar-brand br {
