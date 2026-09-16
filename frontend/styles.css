@@ -31,6 +31,7 @@ h1, h2, h3, .sidebar-brand { font-family: 'Space Grotesk', sans-serif; }
 .button:hover { transform: translateY(-1px); }
 .button.primary { color: #fff; background: var(--green); }.button.primary:hover { background: #174835; }.button.secondary { background: #e7ede6; color: var(--green); }.button.wide { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
 .text-button { border: 0; background: transparent; color: var(--green); text-decoration: underline; font-size: 12px; align-self: center; }
+.auth-help { margin: -4px 0 2px; color: var(--muted); font-size: 12px; }
 .app-shell { min-height: 100vh; display: grid; grid-template-columns: 245px 1fr; }
 .sidebar { background: var(--green); color: #d8e6d5; padding: 28px 17px; display: flex; flex-direction: column; }
 .sidebar-brand { display: flex; align-items: center; gap: 11px; line-height: 1.1; font-size: 15px; color: #f4f8ea; margin: 0 10px 68px; }.sidebar-brand b { color: var(--lime); }
