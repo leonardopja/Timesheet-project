@@ -28,32 +28,17 @@ ng generate --help
 
 ## Building
 
-To build the project run:
+# Manage My Shifts
+
+This is a client-only application built with HTML, CSS and vanilla JavaScript. It does not require Angular, a server or a database.
+
+## Run locally
+
+Open `index.html` directly in a browser, or serve the `frontend` folder with any static file server:
 
 ```bash
-ng build
+npx serve .
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
+All users, sessions and shifts are stored in the browser's `localStorage`.
 ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
