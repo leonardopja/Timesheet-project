@@ -20,7 +20,7 @@
 
     function validateCredentials(username, password) {
         if (username.length < 6 || password.length < 6) return 'Username and password must have at least 6 characters.';
-        if (!/[A-Za-z]/.test(username) || !/\d/.test(username) || !/[^A-Za-z\d]/.test(username)) return 'Username must contain letters, numbers and a special character.';
+        if (!/^[A-Za-z]+$/.test(username)) return 'Username must contain letters only.';
         return '';
     }
 
