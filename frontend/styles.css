@@ -78,12 +78,16 @@ h3,
 }
 
 .company-logo-frame {
-    width: min(100%, 370px);
-    padding: 17px 22px;
-    margin-bottom: 36px;
+    position: absolute;
+    top: 32px;
+    right: clamp(25px, 5vw, 70px);
+    width: min(30vw, 240px);
+    padding: 10px 14px;
+    margin: 0;
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 14px 35px rgba(8, 31, 77, .2);
+    border: 1px solid rgba(255, 255, 255, .55);
+    border-radius: 7px;
+    box-shadow: 0 10px 25px rgba(8, 31, 77, .16);
 }
 
 .company-logo {
@@ -105,7 +109,7 @@ h3,
 }
 
 .auth-intro .brand-mark {
-    margin-bottom: 70px;
+    margin-bottom: 42px;
 }
 
 .kicker {
@@ -598,8 +602,17 @@ td small {
         padding: 35px 25px;
     }
 
+    .company-logo-frame {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: min(100%, 220px);
+        padding: 8px 12px;
+        margin-bottom: 28px;
+    }
+
     .auth-intro .brand-mark {
-        margin-bottom: 30px;
+        margin-bottom: 26px;
     }
 
     .auth-intro h1 {
